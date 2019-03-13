@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "/CORE",
+                "/STM32F10x_FWLib/inc",
+                "/SYSTEM/delay",
+                "/SYSTEM/sys",
+                "/SYSTEM/usart",
+                "/USER",
+                "/HARDWARE/LED"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "D:\\Program Files\\mingw64\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
