@@ -32,10 +32,89 @@ STM32 的 IO 口 可以由软件配置成如下 8 种模式：
 
 
 GPIO 相关的函数和定义分布在固件库文件 stm32f10x_gpio.c 和头文件 stm32f10x_gpio.h 文 件中。
-## 4.实验步骤
 
-## 5.实验代码
+GPIO初始化
+``` c
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | B | C, ENABLE); //使能APB2总线外设时钟
 
-## 6.实验结果
+RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复位
 
-## 7.总结
+配置各个PINport(模拟输入_AIN、输入浮空_IN_FLOATING、输入上拉_IPU、输入下拉_IPD、
+开漏输出_OUT_OD、推挽式输出_OUT_PP、推挽式复用输出_AF_PP、开漏复用输出_AF_OD); //GPIO初始化完毕
+```
+
+## 4.实验步骤及实验代码
+1. 使用TEMPLATE0，在工程目录新建HARDWARE/LED文件夹，在LED文件夹内新建led.h头文件和led.c源文件。
+    <img src="/img/contents.png" width = "300" height = "600" alt="工程目录">
+    ``` c
+    /*led.h文件*/
+    #ifndef __LED_H
+    #define __LED_H
+
+    void LED_init(void);//LED初始化函数声明
+
+    #endif // !__LED_H
+
+    ```
+
+
+    ``` c
+    /*led.c文件*/
+    #include "led.h"
+    #include "stm32f10x.h"
+
+    void LED_init(void){
+        GPIO_InitTypeDef GPIO_InitStruct; //定义 GPIO初始化结构体
+    
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//GPIOB时钟使能
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE,ENABLE);//GPIOE时钟使能
+
+        GPIO_InitStruct.GPIO_Mode=GPIO_Mode_Out_PP;  //GPIO模式
+        GPIO_InitStruct.GPIO_Pin=GPIO_Pin_5;//pin口
+        GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;//速度
+
+        GPIO_Init(GPIOB,&GPIO_InitStruct);//初始化GPIO B组
+        GPIO_Init(GPIOE,&GPIO_InitStruct);//初始化GPIO E组
+
+        GPIO_SetBits(GPIOB,GPIO_Pin_5);//置1（LED关闭）
+        GPIO_SetBits(GPIOE,GPIO_Pin_5);//置1（LED关闭）
+    }
+    ```
+1. IO口初始化都要先进行对应时钟使能，其次配置GPIO初始化结构体，再使用GPIO_Init()函数进行初始化，并置一个初值（将LED关闭）。
+1. 编写main.c
+    ``` c
+    #include "stm32f10x.h"
+    #include "led.h"
+    #include "delay.h"//为了使用delay_ms()函数
+
+    int main(void)
+    {
+
+        LED_init();//初始化LED
+        delay_init();//初始化delay
+
+        while (1)
+        {
+            GPIO_SetBits(GPIOB, GPIO_Pin_5);//关LED0
+            GPIO_ResetBits(GPIOE, GPIO_Pin_5);//开LED1
+
+            delay_ms(500);//延时500ms，以便能观察到实验现象
+
+            GPIO_ResetBits(GPIOB, GPIO_Pin_5);//开LED0
+            GPIO_SetBits(GPIOE, GPIO_Pin_5);//关LED1
+
+            delay_ms(500);延时500ms，以便能观察到实验现象
+        }
+    }
+
+    ```
+
+## 5.实验结果
+
+
+
+## 6.总结
+
+
+
+
