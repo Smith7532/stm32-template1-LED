@@ -45,6 +45,7 @@ RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复
 
 ## 4.实验步骤及实验代码
 1. 使用TEMPLATE0，在工程目录新建HARDWARE/LED文件夹，在LED文件夹内新建led.h头文件和led.c源文件。
+    并把它们加到工程内，并在includepath内加上".../HARDWARE/LED"
     <img src="/img/contents.png" width = "300" height = "600" alt="工程目录">
     ``` c
     /*led.h文件*/
@@ -80,7 +81,7 @@ RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复
         GPIO_SetBits(GPIOE,GPIO_Pin_5);//置1（LED关闭）
     }
     ```
-1. IO口初始化都要先进行对应时钟使能，其次配置GPIO初始化结构体，再使用GPIO_Init()函数进行初始化，并置一个初值（将LED关闭）。
+1. IO口初始化都要先进行对应时钟使能，GPIO 是挂载在 APB2 总线上的外设，所以使能APB2的时钟，其次配置GPIO初始化结构体，再使用GPIO_Init()函数进行初始化，并置一个初值（将LED关闭）。
 1. 编写main.c
     ``` c
     #include "stm32f10x.h"
@@ -108,13 +109,13 @@ RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复
     }
 
     ```
-
+1. 编译完成后，使用flyMCU下载到开发板内，观察实验结果，调试。
 ## 5.实验结果
 
 
 
 ## 6.总结
-
-
-
+1. 对stm32开发的工程文件体系有了一个粗略的认识。
+1. 对编写自己的硬件开发库有一个框架的认识。
+1. 明白对GPIO的初始化过程
 
