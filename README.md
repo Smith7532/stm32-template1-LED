@@ -11,14 +11,22 @@
 1. keil软件
 1. flymcu——stm32串口下载软件
 ## 3.实验原理
+
 ### 3.1 硬件连接
 STM32F103 板载总共有 3 个 LED，其原理图如图所示
+
 <img src="/img/LEDpcb.png" width = "300" height = "200" alt="LED电路原理">
+
 其中 PWR 是系统电源指示灯，为蓝色。
+
 LED0(DS0)和 LED1(DS1)分别接在 PB5 和 PE5 上。
+
 <img src="/img/LED0PB5.png" width = "300" height = "100" alt="LED0在PB5上">
+
 <img src="/img/LED1PE5.png" width = "300" height = "100" alt="LED1在PE5上">
+
 LED0为红色，LED1为绿色
+
 ### 3.2 STM32的GPIO
 STM32 的 IO 口 可以由软件配置成如下 8 种模式：
 * 上拉输入：上拉就是把电位拉高，比如拉到Vcc。上拉就是将不确定的信号通过一个电阻嵌位在高电平！电阻同时起限流作用！弱强只是上拉电阻的阻值不同，没有什么严格区分。
@@ -31,7 +39,7 @@ STM32 的 IO 口 可以由软件配置成如下 8 种模式：
 * 开漏复用输出：可以理解为GPIO口被用作第二功能时的配置情况（即并非作为通用IO口使用）。
 
 
-GPIO 相关的函数和定义分布在固件库文件 stm32f10x_gpio.c 和头文件 stm32f10x_gpio.h 文 件中。
+GPIO 相关的函数和定义分布在固件库文件 stm32f10x_gpio.c 和头文件 stm32f10x_gpio.h 文件中。
 
 GPIO初始化
 ``` c
@@ -45,8 +53,11 @@ RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复
 
 ## 4.实验步骤及实验代码
 1. 使用TEMPLATE0，在工程目录新建HARDWARE/LED文件夹，在LED文件夹内新建led.h头文件和led.c源文件。
+
     并把它们加到工程内，并在includepath内加上".../HARDWARE/LED"
+
     <img src="/img/contents.png" width = "300" height = "600" alt="工程目录">
+    
     ``` c
     /*led.h文件*/
     #ifndef __LED_H
@@ -112,7 +123,7 @@ RCC_ APB2PeriphResetCmd (RCC_APB2Periph_GPIOA | B | C, DISABLE); //释放GPIO复
 1. 编译完成后，使用flyMCU下载到开发板内，观察实验结果，调试。
 ## 5.实验结果
 
-
+<img src="/img/result.jpg" width = "500" alt="实验结果">
 
 ## 6.总结
 1. 对stm32开发的工程文件体系有了一个粗略的认识。
